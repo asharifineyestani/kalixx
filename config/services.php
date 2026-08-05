@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'smsir' => [
+        'verify_template_id' => env('SMSIR_VERIFY_TEMPLATE_ID'),
+    ],
+
 ];
