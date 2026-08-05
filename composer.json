@@ -11,7 +11,7 @@
     "require": {
         "php": "^8.3",
         "cryptommer/smsir": "^1.2",
-        "google/apiclient": "^2.19",
+        "google/auth": "^1.53",
         "hekmatinasser/verta": "^9.0",
         "inertiajs/inertia-laravel": "^3.0",
         "laravel/framework": "^13.17",

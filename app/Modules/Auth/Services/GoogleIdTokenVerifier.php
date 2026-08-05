@@ -2,8 +2,9 @@
 
 namespace App\Modules\Auth\Services;
 
-use Google\Client as GoogleClient;
+use Google\Auth\AccessToken;
 use RuntimeException;
+use Throwable;
 
 class GoogleIdTokenVerifier
 {
@@ -11,17 +12,24 @@ class GoogleIdTokenVerifier
     {
         $clientId = config('services.google.client_id');
 
-        if (!is_string($clientId) || $clientId === '') {
+        if (empty($clientId)) {
             throw new RuntimeException(
                 'Google Client ID is not configured.'
             );
         }
 
-        $client = new GoogleClient([
-            'client_id' => $clientId,
-        ]);
+        try {
+            $payload = (new AccessToken())->verify(
+                $idToken,
+                [
+                    'audience' => $clientId,
+                ],
+            );
+        } catch (Throwable $exception) {
+            report($exception);
 
-        $payload = $client->verifyIdToken($idToken);
+            return null;
+        }
 
         return is_array($payload)
             ? $payload
