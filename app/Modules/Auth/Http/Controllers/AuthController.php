@@ -443,9 +443,6 @@ class AuthController extends Controller
             }
         );
 
-        app(CreateFreeTrialSubscriptionAction::class)
-            ->execute($user);
-
         $token = $this->createAuthToken(
             $user,
             $validated['device_name'] ?? null,
