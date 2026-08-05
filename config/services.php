@@ -37,6 +37,8 @@ return [
 
     'smsir' => [
         'verify_template_id' => env('SMSIR_VERIFY_TEMPLATE_ID'),
+        'appointment_notify_client' => env('SMSIR_APPOINTMENT_NOTIFY_CLIENT'),
+        'appointment_notify_psychologist' => env('SMSIR_APPOINTMENT_NOTIFY_PSYCHOLOGIST'),
     ],
 
 ];
