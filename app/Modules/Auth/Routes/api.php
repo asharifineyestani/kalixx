@@ -1,6 +1,7 @@
 <?php
 
 use App\Modules\Auth\Http\Controllers\AuthController;
+use App\Modules\Auth\Http\Controllers\GoogleAuthController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('api')
@@ -21,6 +22,10 @@ Route::middleware('api')
             // Password
             Route::post('/login', [AuthController::class, 'loginWithPassword']);
             Route::post('/password/set', [AuthController::class, 'setPassword']);
+
+            // Google
+            Route::post('/google', [GoogleAuthController::class, 'login'])
+                ->middleware('throttle:10,1');
 
             // Protected
             Route::middleware('auth:sanctum')->group(function (): void {

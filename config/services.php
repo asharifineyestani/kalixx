@@ -41,4 +41,9 @@ return [
         'appointment_notify_psychologist' => env('SMSIR_APPOINTMENT_NOTIFY_PSYCHOLOGIST'),
     ],
 
+
+    'google' => [
+    'client_id' => env('GOOGLE_CLIENT_ID'),
+],
+
 ];
