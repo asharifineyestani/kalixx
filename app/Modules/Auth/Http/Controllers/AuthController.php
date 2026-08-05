@@ -28,7 +28,10 @@ class AuthController extends Controller
 
     protected function normalizeMobile(string $mobile): string
     {
-        return convertPersianToEnglish($mobile);
+
+        $persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+        $englishDigits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+        return str_replace($persianDigits, $englishDigits, $mobile);
     }
 
     protected function validateWithNormalizedMobile(
@@ -713,25 +716,25 @@ class AuthController extends Controller
         }
     }
 
-protected function sendSms(SmsLog $log): void
-{
-    $templateId = config('services.smsir.verify_template_id');
+    protected function sendSms(SmsLog $log): void
+    {
+        $templateId = config('services.smsir.verify_template_id');
 
-    if (!$templateId) {
-        throw new \RuntimeException(
-            'SMS.ir verification template ID is not configured.'
+        if (!$templateId) {
+            throw new \RuntimeException(
+                'SMS.ir verification template ID is not configured.'
+            );
+        }
+
+        Smsir::Send()->Verify(
+            $log->mobile,
+            (int) $templateId,
+            [
+                new Parameters(
+                    'CODE',
+                    (string) $log->code,
+                ),
+            ],
         );
     }
-
-    Smsir::Send()->Verify(
-        $log->mobile,
-        (int) $templateId,
-        [
-            new Parameters(
-                'CODE',
-                (string) $log->code,
-            ),
-        ],
-    );
-}
 }
